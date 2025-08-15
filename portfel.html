@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shoxsulton • Portfolio</title>
+  <meta name="description" content="Shoxsulton – Frontend learner & trader. Animated one‑page portfolio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0e12; --muted:#0f141b; --fg:#e9eef5; --sub:#a8b3c5; --brand:#6ee7ff; --brand-2:#7c4dff; --ok:#22c55e; --warn:#f59e0b; --err:#ef4444;
+      --card:#0f131a; --card-b:#1b2430; --glass:rgba(255,255,255,.06);
+    }
+    @media (prefers-color-scheme: light){
+      :root{--bg:#f7fafc; --muted:#eef2f7; --fg:#111827; --sub:#475569; --card:#ffffff; --card-b:#e5e7eb; --glass:rgba(0,0,0,.05)}
+      .glow{filter: none}
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; color:var(--fg); background:radial-gradient(1000px 800px at 80% -100px, rgba(124,77,255,.25), transparent 60%), radial-gradient(1200px 800px at -10% -200px, rgba(110,231,255,.18), transparent 60%), var(--bg);}    
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .nav{position:sticky;top:0;backdrop-filter:saturate(140%) blur(8px);background:linear-gradient(to right,transparent, var(--glass), transparent);z-index:50}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+    .chip{border:1px solid var(--card-b);padding:8px 12px;border-radius:999px;background:var(--card);display:inline-flex;align-items:center;gap:8px}
+    .chip .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 0 12px rgba(110,231,255,.6)}
+    .nav a{opacity:.85;padding:8px 10px;border-radius:10px}
+    .nav a:hover{background:var(--glass);opacity:1}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center;min-height:75dvh}
+    .title{font-size:clamp(28px,5vw,56px);line-height:1.05;margin:0}
+    .subtitle{margin:14px 0 20px;color:var(--sub);font-size:clamp(14px,2.2vw,18px)}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{padding:12px 16px;border-radius:14px;border:1px solid var(--card-b);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.06));cursor:pointer;font-weight:600}
+    .btn.brand{border-color:transparent;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#071018}
+    .hero-card{border:1px solid var(--card-b);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.06));border-radius:20px;padding:16px;position:relative;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+    .tile{aspect-ratio:1;border-radius:10px;background:var(--card);border:1px solid var(--card-b);position:relative;overflow:hidden}
+    .tile::after{content:"";position:absolute;inset:0;background:conic-gradient(from 180deg at 50% 50%, rgba(124,77,255,.2), rgba(110,231,255,.2), transparent 60%);mix-blend:overlay;opacity:.6}
+    .glow{position:absolute;inset:-40%;background:radial-gradient(600px 300px at 10% 10%, rgba(110,231,255,.25), transparent 60%), radial-gradient(400px 250px at 80% 90%, rgba(124,77,255,.25), transparent 60%);filter:blur(40px);opacity:.7;pointer-events:none}
+
+    /* Sections */
+    section{padding:80px 0}
+    .section-title{font-size:28px;margin:0 0 8px}
+    .section-sub{color:var(--sub);margin:0 0 26px}
+
+    /* Projects */
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+    .card{grid-column:span 6;border:1px solid var(--card-b);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.06));border-radius:18px;overflow:hidden;transition:transform .2s ease, box-shadow .2s ease}
+    .card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .thumb{aspect-ratio:16/9;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:flex;align-items:center;justify-content:center;font-weight:800;letter-spacing:.08em}
+    .card-body{padding:14px 16px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{font-size:12px;padding:6px 10px;border-radius:999px;background:var(--muted);border:1px solid var(--card-b);opacity:.9}
+
+    /* Skills */
+    .skillbar{display:flex;align-items:center;gap:10px;margin:10px 0}
+    .skillbar .bar{flex:1;height:10px;border-radius:999px;background:var(--muted);position:relative;overflow:hidden}
+    .skillbar .bar > span{position:absolute;inset:0 0 0 0;transform-origin:left center;background:linear-gradient(90deg,var(--brand),var(--brand-2))}
+
+    /* Contact */
+    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    form input, form textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--card-b);background:var(--card);color:var(--fg)}
+    form textarea{grid-column:span 2;min-height:120px;resize:vertical}
+
+    /* Footer */
+    footer{padding:32px 0;color:var(--sub);border-top:1px solid var(--card-b)}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;min-height:auto}
+      .card{grid-column:span 12}
+      form{grid-template-columns:1fr}
+      form textarea{grid-column:span 1}
+    }
+
+    /* Reveal Animations */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.on{opacity:1;transform:none}
+    .float{animation:float 6s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="chip"><span class="dot"></span><strong>Shoxsulton</strong><span style="opacity:.6">• Portfolio</span></div>
+      <nav style="display:flex;gap:10px">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <a href="https://github.com/your-username" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1 class="title reveal">Assalomu alaykum, men <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Shoxsulton</span>.</h1>
+        <p class="subtitle reveal">Frontend yo'lida — HTML/CSS/JS, animatsiyalar va toza UI. Kripto va savdo bo'yicha ham kontent yarataman. Bu sahifa GitHub Pages’da ishlashi uchun <strong>single‑file</strong> qilib yozilgan.</p>
+        <div class="cta reveal">
+          <a class="btn brand" href="#projects">Loyihalarni ko'rish</a>
+          <a class="btn" href="#contact">Aloqa</a>
+        </div>
+      </div>
+      <div class="hero-card reveal float">
+        <div class="glow"></div>
+        <div class="hero-grid" aria-hidden="true">
+          <!-- Decorative tiles -->
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title reveal">Loyihalar</h2>
+      <p class="section-sub reveal">Real ishlar, mini‑proyektlar va tajribalar.</p>
+      <div class="grid">
+        <article class="card reveal">
+          <div class="thumb">To‑Do</div>
+          <div class="card-body">
+            <h3 style="margin:6px 0 6px">Minimal To‑Do App</h3>
+            <p style="margin:0 0 10px;color:var(--sub)">Vanilla JS, localStorage, keyboard UX.</p>
+            <div class="tags">
+              <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+            </div>
+          </div>
+        </article>
+        <article class="card reveal">
+          <div class="thumb">Converter</div>
+          <div class="card-body">
+            <h3 style="margin:6px 0 6px">Valyuta Konvertori</h3>
+            <p style="margin:0 0 10px;color:var(--sub)">Fetch API bilan real kurs (demo).</p>
+            <div class="tags">
+              <span class="tag">API</span><span class="tag">Fetch</span><span class="tag">A11y</span>
+            </div>
+          </div>
+        </article>
+        <article class="card reveal">
+          <div class="thumb">Charts</div>
+          <div class="card-body">
+            <h3 style="margin:6px 0 6px">Kripto Mini Dashboard</h3>
+            <p style="margin:0 0 10px;color:var(--sub)">Canvas chart, responsive grid.</p>
+            <div class="tags">
+              <span class="tag">Canvas</span><span class="tag">Grid</span><span class="tag">Perf</span>
+            </div>
+          </div>
+        </article>
+        <article class="card reveal">
+          <div class="thumb">3D</div>
+          <div class="card-body">
+            <h3 style="margin:6px 0 6px">CSS 3D Card</h3>
+            <p style="margin:0 0 10px;color:var(--sub)">Perspective & hover parallax.</p>
+            <div class="tags">
+              <span class="tag">CSS</span><span class="tag">3D</span><span class="tag">Motion</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="section-title reveal">Ko'nikmalar</h2>
+      <p class="section-sub reveal">Har kuni +1% tamoyili.</p>
+      <div class="reveal">
+        <div class="skillbar"><span style="min-width:80px">HTML</span><div class="bar"><span style="width:85%"></span></div></div>
+        <div class="skillbar"><span style="min-width:80px">CSS</span><div class="bar"><span style="width:78%"></span></div></div>
+        <div class="skillbar"><span style="min-width:80px">JS</span><div class="bar"><span style="width:65%"></span></div></div>
+        <div class="skillbar"><span style="min-width:80px">Git</span><div class="bar"><span style="width:60%"></span></div></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title reveal">Bog'lanish</h2>
+      <p class="section-sub reveal">Hamkorlik yoki savollar uchun yozing.</p>
+      <form class="reveal" name="contact" netlify>
+        <input type="hidden" name="form-name" value="contact" />
+        <label>
+          <span class="sr">Ism</span>
+          <input name="name" placeholder="Ismingiz" required />
+        </label>
+        <label>
+          <span class="sr">Email</span>
+          <input type="email" name="email" placeholder="Email" required />
+        </label>
+        <label style="grid-column:1/-1">
+          <span class="sr">Xabar</span>
+          <textarea name="message" placeholder="Salom! ..." required></textarea>
+        </label>
+        <div>
+          <button class="btn brand" type="submit">Yuborish</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="y"></span> Shoxsulton • Built with vanilla HTML/CSS/JS • Hosted on GitHub Pages
+    </div>
+  </footer>
+
+  <script>
+    // Dynamic year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // IntersectionObserver reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} 
+      })
+    }, {threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+
+    // Smooth focus styles for accessibility (focus-visible)
+    const style = document.createElement('style');
+    style.textContent = `:focus{outline:none}:focus-visible{outline:2px solid var(--brand);outline-offset:3px}`;
+    document.head.append(style);
+
+    // Respect reduced motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReduced){
+      document.querySelectorAll('.float').forEach(el=> el.style.animation = 'none');
+    }
+  </script>
+  
+  <!-- Optional: Plausible / Analytics snippet can be added later -->
+</body>
+</html>
