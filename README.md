@@ -13,9 +13,3 @@ Bu loyiha mening shaxsiy **portfolio sayt**im bo‘lib, unda o‘zim haqimda, lo
 - **HTML5** – sahifa tuzilishi
 - **CSS3** (Flexbox, Grid, Responsive) – dizayn
 - **JavaScript** – interaktivlik (DOM, eventlar)
-
-## ⚡ Qanday ishlatish
-1. Repoga clone qil:
-   ```bash
-   git clone https://github.com/ronnie7799/porrtfolio-2.git
-   cd porrtfolio-2
